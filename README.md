@@ -318,7 +318,35 @@ POST  /api/bookings/{id}/cancel
 GET   /api/bookings
 PATCH /api/bookings/{id}/status
 
-## TEST CASE KIỂM THỬ TỐI THIỂU
+# DATABASE MIGRATION VÀ SWAGGER
+
+Migration / Database Schema
+Dự án sử dụng EF Core Migrations để bàn giao schema database.
+
+Migration nằm tại:
+- `src/backend/Migrations`
+
+Khi setup database, chạy:
+- `cd src/backend`
+- `dotnet ef database update`
+
+Vì đã có EF Core Migrations, project không cần SQL script riêng.
+
+# SWAGGER / API DOCUMENTATION
+Dự án sử dụng Swagger để xem và test API.
+
+Sau khi chạy backend, mở:
+- `http://localhost:5000/swagger`
+
+Swagger dùng để:
+- Xem danh sách API endpoint.
+- Test API trực tiếp.
+- Đăng nhập lấy JWT.
+- Nhập token qua nút Authorize để test các API cần phân quyền.
+
+Vì đã có Swagger, project không cần Postman collection riêng.
+
+# TEST CASE KIỂM THỬ TỐI THIỂU
 
 1. TC1: Không cho đặt lịch trong quá khứ
 - Kết quả mong đợi: `400 BOOKING_START_TIME_IN_PAST`
@@ -390,7 +418,7 @@ Cách chạy SQL Server bằng Docker Compose:
 5. Kiểm tra container đang chạy: `docker compose ps`
 
 Ví dụ connection string khi backend kết nối tới SQL Server trong Docker:
-- `Server=localhost,1434;Database=ServiceBookingDb;User Id=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;`
+- `Server=localhost,1434;Database=service_booking;User Id=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;`
 
 Thiết lập connection string cho backend bằng User Secrets:
 - `dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1434;Database=service_booking;User Id=sa;Password=YourStrongPassword123!;TrustServerCertificate=True;" --project src/backend/ServiceBooking.Api.csproj`
