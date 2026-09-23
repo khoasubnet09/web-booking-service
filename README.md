@@ -16,6 +16,7 @@ Không có thanh toán, email, realtime, background job hoặc các phần bonus
 
 # CẤU TRÚC DỰ ÁN (PROJECT STRUCTURE)
 
+```text
 service-booking/
 |-- src/
 |   |-- backend/                                      # ASP.NET Core Web API
@@ -109,6 +110,7 @@ service-booking/
 |-- docker-compose.yml                             # Có trong repo nhưng không bắt buộc cho luồng chạy chính
 |-- guide.md                                       # Ghi chú triển khai nội bộ
 |-- README.md                                      # Tài liệu chính của dự án
+```
 
 # TỔNG QUAN HỆ THỐNG (ARCHITECTURE OVERVIEW)
 
