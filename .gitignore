@@ -1,0 +1,24 @@
+# Frontend
+node_modules/
+.next/
+out/
+
+# Backend
+bin/
+obj/
+.tools/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Backend local configuration and secrets
+src/backend/appsettings.Local.json
+src/backend/appsettings.Development.local.json
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

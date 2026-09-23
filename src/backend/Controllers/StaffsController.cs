@@ -12,16 +12,19 @@
     3. POST /api/staffs (quyền Admin) : Tạo Staff
     4. PUT /api/staffs/{id} (quyền Admin) : Sửa/mở/khóa Staff 
 */
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceBooking.Api.DTOs.Staff;
 using ServiceBooking.Api.Services.Interfaces;
 
+using ServiceBooking.Api.DTOs.WorkSchedule;
+
 namespace ServiceBooking.Api.Controllers;
 
 [ApiController]
 [Route("api/staffs")]
-public class StaffsController(IStaffService staffService) : ControllerBase
+public class StaffsController(IStaffService staffService, IWorkScheduleService workScheduleService) : ControllerBase
 {
     [HttpGet]
     [Authorize]
@@ -58,4 +61,31 @@ public class StaffsController(IStaffService staffService) : ControllerBase
 
         return Ok(staff);
     }
+    [HttpGet("{staffId:guid}/schedules")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<IReadOnlyList<WorkScheduleResponse>>> GetSchedules(
+        Guid staffId,
+        CancellationToken cancellationToken)
+    {
+        var schedules = await workScheduleService.GetByStaffIdAsync(
+            staffId,
+            cancellationToken);
+
+        return Ok(schedules);
+    }
+
+    [HttpPost("{staffId:guid}/schedules")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<WorkScheduleResponse>> CreateSchedule(Guid staffId, [FromBody] CreateWorkScheduleRequest request, CancellationToken cancellationToken)
+    {
+        var schedule = await workScheduleService.CreateAsync(staffId, request, cancellationToken);
+
+        return StatusCode(StatusCodes.Status201Created, schedule);
+    }
 }
+
+/* Triển khai WorkSchedule cho Staff 
+- import namesapce WorkSchedule 
+- import WorkSchedule vào constructor của class 
+- import 2 action
+- Đăng ký DI */
